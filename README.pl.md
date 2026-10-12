@@ -28,4 +28,4 @@ Projekt studencki (Politechnika Rzeszowska). Luki bezpieczeństwa są w pierwsze
 
 ## Wersja po angielsku
 
-Zobacz [wersję po angielsku](README.md).
+See [english version](README.md).
