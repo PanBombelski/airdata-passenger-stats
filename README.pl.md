@@ -1,6 +1,6 @@
 # airtraffic-anomalies
 
-See [English version](README.md)
+Zobacz [English version](README.md)
 
 Aplikacja internetowa do wykrywania nietypowych tras lotniczych nad Polską, oparta na publicznych danych z OpenSky Network.
 
