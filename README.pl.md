@@ -1,7 +1,5 @@
 # airtraffic-anomalies
 
-Zobacz [wersję po angielsku](README.md).
-
 Aplikacja internetowa do wykrywania nietypowych tras lotniczych nad Polską, oparta na publicznych danych z OpenSky Network.
 
 ## Idea
@@ -27,3 +25,7 @@ Trasy lotnicze zwykle przebiegają podobnie. Projekt zbiera pozycje samolotów w
 ## Kontekst
 
 Projekt studencki (Politechnika Rzeszowska). Luki bezpieczeństwa są w pierwszej wersji celowo i zostaną poprawione w późniejszym etapie.
+
+## Wersja po angielsku
+
+Zobacz [wersję po angielsku](README.md).
