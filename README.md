@@ -1,7 +1,5 @@
 # airtraffic-anomalies
 
-See [Polish version](README.pl.md)
-
 A web project for detecting unusual flight routes over Poland, using public air traffic data from the OpenSky Network.
 
 ## Idea
@@ -27,3 +25,7 @@ Each airline route usually follows a similar path. This project collects aircraf
 ## Context
 
 University project (Politechnika Rzeszowska). Security weaknesses are kept on purpose in the first version and will be addressed in a later stage.
+
+## Polish version
+
+Zobacz [wersję po polsku](README.pl.md).
