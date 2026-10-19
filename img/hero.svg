@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 380" width="460" height="380" role="img" aria-label="Samolot nad lotniskiem i rosnący wykres słupkowy">
+  <!-- Ilustracja na stronę Start: niebo, chmury, samolot, wykres i wieża kontroli lotów -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fd0f7"/>
+      <stop offset="1" stop-color="#e9f5ff"/>
+    </linearGradient>
+    <clipPath id="frame">
+      <rect width="460" height="380" rx="28"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- Niebo -->
+    <rect width="460" height="380" fill="url(#sky)"/>
+
+    <!-- Słońce -->
+    <circle cx="390" cy="74" r="34" fill="#ffd27a"/>
+    <circle cx="390" cy="74" r="48" fill="#ffd27a" opacity="0.25"/>
+
+    <!-- Chmury -->
+    <g fill="#ffffff">
+      <ellipse cx="86" cy="86" rx="46" ry="16"/>
+      <circle cx="72" cy="76" r="18"/>
+      <circle cx="98" cy="70" r="22"/>
+      <ellipse cx="250" cy="190" rx="38" ry="13" opacity="0.9"/>
+      <circle cx="240" cy="182" r="14" opacity="0.9"/>
+      <circle cx="262" cy="178" r="17" opacity="0.9"/>
+      <ellipse cx="360" cy="160" rx="30" ry="10" opacity="0.8"/>
+      <circle cx="368" cy="153" r="13" opacity="0.8"/>
+    </g>
+
+    <!-- Ślad lotu (przerywana linia) -->
+    <path d="M30 250 C120 236 190 160 290 124" fill="none" stroke="#2b8ad8" stroke-width="3" stroke-dasharray="8 8" stroke-linecap="round"/>
+
+    <!-- Samolot (widok z góry) -->
+    <g transform="translate(318 112) rotate(-22)" fill="#0d3b6e">
+      <path d="M-42 -5 H30 Q46 0 30 5 H-42 Q-47 0 -42 -5 Z"/>
+      <path d="M-6 -5 L-22 -38 H-11 L14 -5 Z"/>
+      <path d="M-6 5 L-22 38 H-11 L14 5 Z"/>
+      <path d="M-34 -5 L-45 -18 H-38 L-24 -5 Z"/>
+      <path d="M-34 5 L-45 18 H-38 L-24 5 Z"/>
+    </g>
+
+    <!-- Ziemia -->
+    <rect x="0" y="300" width="460" height="80" fill="#cfe3f5"/>
+
+    <!-- Wykres słupkowy jak budynki lotniska -->
+    <g>
+      <rect x="40" y="252" width="30" height="48" rx="4" fill="#2b8ad8"/>
+      <rect x="82" y="230" width="30" height="70" rx="4" fill="#0d3b6e"/>
+      <rect x="124" y="242" width="30" height="58" rx="4" fill="#2b8ad8"/>
+      <rect x="166" y="206" width="30" height="94" rx="4" fill="#0d3b6e"/>
+      <rect x="208" y="184" width="30" height="116" rx="4" fill="#2b8ad8"/>
+    </g>
+
+    <!-- Wieża kontroli lotów -->
+    <g>
+      <rect x="352" y="214" width="20" height="86" fill="#7d8ea3"/>
+      <path d="M336 214 H388 L380 188 H344 Z" fill="#0d3b6e"/>
+      <rect x="348" y="194" width="28" height="10" rx="2" fill="#9fd0f7"/>
+      <rect x="360" y="170" width="4" height="18" fill="#0d3b6e"/>
+      <circle cx="362" cy="168" r="4" fill="#f2a33a"/>
+    </g>
+
+    <!-- Pas startowy -->
+    <rect x="0" y="322" width="460" height="30" fill="#4d5d70"/>
+    <path d="M10 337 H450" stroke="#ffffff" stroke-width="3" stroke-dasharray="22 16"/>
+    <g fill="#f2a33a">
+      <circle cx="20" cy="358" r="3"/>
+      <circle cx="80" cy="358" r="3"/>
+      <circle cx="140" cy="358" r="3"/>
+      <circle cx="200" cy="358" r="3"/>
+      <circle cx="260" cy="358" r="3"/>
+      <circle cx="320" cy="358" r="3"/>
+      <circle cx="380" cy="358" r="3"/>
+      <circle cx="440" cy="358" r="3"/>
+    </g>
+  </g>
+</svg>

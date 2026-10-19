@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zmiany liczby pasażerów – airdata</title>
+  <meta name="description" content="Lotniska z największym wzrostem lub spadkiem liczby pasażerów między dwoma latami.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/menu.js" defer></script>
+</head>
+<body>
+  <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="airdata – strona główna">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
+        </span>
+        <span class="logo-text">air<strong>data</strong></span>
+      </a>
+
+      <!-- Przycisk ☰ widoczny tylko na telefonie -->
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Menu główne">
+        <a class="nav-link" href="index.html">Start</a>
+        <a class="nav-link" href="ranking.html">Ranking</a>
+        <a class="nav-link" href="porownywarka.html">Porównywarka</a>
+        <a class="nav-link" href="kontakt.html">Kontakt</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Motyw: przycisk w kształcie chmurki, panel dojdzie w etapie 8 -->
+        <button class="theme-btn" type="button" title="Wybór motywu pojawi się w etapie 8">
+          <svg class="cloud-shape" viewBox="0 0 100 60" aria-hidden="true">
+            <path d="M22 54H80A16 16 0 0 0 80 22A24 24 0 0 0 34 20A18 18 0 0 0 22 54Z"/>
+          </svg>
+          <span class="theme-btn-label">Motyw</span>
+        </button>
+
+        <!-- Konto: okrągły przycisk, logowanie dojdzie w etapie 9 -->
+        <button class="account-btn" type="button" title="Logowanie pojawi się w etapie 9">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+          </svg>
+          <span>Konto</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main page">
+    <div class="page-head">
+      <h1>Zmiany liczby pasażerów</h1>
+      <p class="lead">Lotniska z największym wzrostem lub spadkiem liczby pasażerów między dwoma wybranymi latami.</p>
+    </div>
+
+    <!-- FILTRY: pola wyboru pojawią się w kolejnych etapach -->
+    <section class="panel" aria-labelledby="filtry-tytul">
+      <h2 class="panel-title" id="filtry-tytul">Filtry</h2>
+      <p class="placeholder">Tu pojawi się wybór dwóch lat (etap 5).</p>
+    </section>
+
+    <!-- WYNIK: tabela lub wykres -->
+    <section class="panel" aria-labelledby="wynik-tytul">
+      <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
+      <p class="placeholder">Tu pojawi się tabela zmian (etap 5).</p>
+      <p class="note">
+        Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
+        odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
+        jest większa niż liczba osób, które faktycznie poleciały.
+      </p>
+      <!-- Pobieranie CSV zadziała w etapie 7 -->
+      <button class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
+    </section>
+  </main>
+
+  <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="logo logo--footer" href="index.html" aria-label="airdata – strona główna">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
+        </span>
+        <span class="logo-text">air<strong>data</strong></span>
+      </a>
+
+      <nav class="footer-nav" aria-label="Stopka">
+        <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>
+        <a class="footer-link" href="kontakt.html">Kontakt</a>
+        <a class="footer-link footer-link--round" href="kontakt.html#media">Media</a>
+      </nav>
+    </div>
+    <p class="footer-note">Projekt zaliczeniowy · Politechnika Rzeszowska · dane: dane.gov.pl</p>
+  </footer>
+</body>
+</html>

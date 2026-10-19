@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>airdata – statystyki pasażerów polskich lotnisk</title>
+  <meta name="description" content="Statystyki pasażerów polskich lotnisk w ruchu krajowym, 2007–2023.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/menu.js" defer></script>
+</head>
+<body>
+  <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="airdata – strona główna">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
+        </span>
+        <span class="logo-text">air<strong>data</strong></span>
+      </a>
+
+      <!-- Przycisk ☰ widoczny tylko na telefonie -->
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Menu główne">
+        <a class="nav-link" href="index.html" aria-current="page">Start</a>
+        <a class="nav-link" href="ranking.html">Ranking</a>
+        <a class="nav-link" href="porownywarka.html">Porównywarka</a>
+        <a class="nav-link" href="kontakt.html">Kontakt</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Motyw: przycisk w kształcie chmurki, panel dojdzie w etapie 8 -->
+        <button class="theme-btn" type="button" title="Wybór motywu pojawi się w etapie 8">
+          <svg class="cloud-shape" viewBox="0 0 100 60" aria-hidden="true">
+            <path d="M22 54H80A16 16 0 0 0 80 22A24 24 0 0 0 34 20A18 18 0 0 0 22 54Z"/>
+          </svg>
+          <span class="theme-btn-label">Motyw</span>
+        </button>
+
+        <!-- Konto: okrągły przycisk, logowanie dojdzie w etapie 9 -->
+        <button class="account-btn" type="button" title="Logowanie pojawi się w etapie 9">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+          </svg>
+          <span>Konto</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- HERO: opis strony i odnośnik do rankingu po lewej, obrazek po prawej -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="hero-desc">
+          <p class="eyebrow">Krajowy ruch lotniczy · 2007–2023</p>
+          <h1>Statystyki pasażerów polskich lotnisk</h1>
+          <p>
+            Sprawdź, które lotniska obsługują najwięcej pasażerów w ruchu krajowym,
+            porównaj je ze sobą i zobacz, jak ruch zmienia się z roku na rok
+            i w ciągu roku.
+          </p>
+        </div>
+        <a class="btn btn-primary hero-link" href="ranking.html">
+          <span aria-hidden="true">→</span> Ranking
+        </a>
+      </div>
+      <div class="hero-img">
+        <img src="img/hero.svg" alt="Ilustracja: samolot nad lotniskiem i rosnący wykres słupkowy" width="460" height="380">
+      </div>
+    </section>
+
+    <!-- KAFELKI: cztery funkcje strony -->
+    <section class="tiles" aria-label="Funkcje strony">
+      <a class="tile" href="ranking.html">
+        <span class="tile-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21v-8h4v8M10 21V7h4v14M15 21v-5h4v5"/></svg></span>
+        <span class="tile-title">Ranking</span>
+        <span class="tile-desc">Top 10 lotnisk w wybranym kwartale</span>
+      </a>
+      <a class="tile" href="porownywarka.html">
+        <span class="tile-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M4 15l5-6 4 3 7-8"/><path d="M4 18l5-3 4 1 7-5" stroke-dasharray="2 2"/></svg></span>
+        <span class="tile-title">Porównywarka</span>
+        <span class="tile-desc">Dwa lotniska na jednym wykresie</span>
+      </a>
+      <a class="tile" href="zmiany.html">
+        <span class="tile-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20V4M3 8l4-4 4 4M17 4v16M13 16l4 4 4-4"/></svg></span>
+        <span class="tile-title">Zmiany</span>
+        <span class="tile-desc">Największe wzrosty i spadki</span>
+      </a>
+      <a class="tile" href="sezonowosc.html">
+        <span class="tile-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span>
+        <span class="tile-title">Sezonowość</span>
+        <span class="tile-desc">Udział kwartałów w roku</span>
+      </a>
+    </section>
+
+    <!-- O PROJEKCIE: tu prowadzi link „O projekcie” ze stopki -->
+    <section class="panel about" id="o-projekcie">
+      <h2>O projekcie</h2>
+      <p>
+        airdata to prototyp strony z ćwiczeń projektowych na kierunku inżynieria
+        i analiza danych (Politechnika Rzeszowska). Strona pokazuje kwartalną liczbę
+        pasażerów obsłużonych przez 15 polskich lotnisk w ruchu krajowym –
+        regularnym i czarterowym.
+      </p>
+      <ul class="facts">
+        <li><strong>15</strong> lotnisk</li>
+        <li><strong>2007–2023</strong> lata</li>
+        <li><strong>4</strong> kwartały w roku</li>
+      </ul>
+      <p>
+        Dane pochodzą z portalu dane.gov.pl. Nie każde lotnisko ma dane za każdy
+        kwartał – brakujące okresy są na stronie wyraźnie oznaczone.
+        Źródła i repozytorium znajdziesz w sekcji <a href="kontakt.html#media">Media</a>.
+      </p>
+      <p class="note">
+        Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
+        odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
+        jest większa niż liczba osób, które faktycznie poleciały.
+      </p>
+    </section>
+  </main>
+
+  <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="logo logo--footer" href="index.html" aria-label="airdata – strona główna">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
+        </span>
+        <span class="logo-text">air<strong>data</strong></span>
+      </a>
+
+      <nav class="footer-nav" aria-label="Stopka">
+        <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>
+        <a class="footer-link" href="kontakt.html">Kontakt</a>
+        <a class="footer-link footer-link--round" href="kontakt.html#media">Media</a>
+      </nav>
+    </div>
+    <p class="footer-note">Projekt zaliczeniowy · Politechnika Rzeszowska · dane: dane.gov.pl</p>
+  </footer>
+</body>
+</html>

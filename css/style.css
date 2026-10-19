@@ -1,0 +1,813 @@
+/* =========================================================
+   airdata – arkusz stylów
+   Kolory są zapisane jako zmienne CSS. Dzięki temu motyw
+   ciemny (etap 8) podmienia tylko wartości zmiennych.
+   ========================================================= */
+
+/* ---------- 1. KOLORY: motyw jasny (domyślny) ---------- */
+:root {
+  --bg: #eef4fa;              /* tło strony – jasne niebo */
+  --surface: #ffffff;         /* tło kart i paneli */
+  --surface-alt: #e2eef9;     /* tło wyróżnionych elementów */
+  --text: #10243e;            /* główny kolor tekstu */
+  --text-muted: #4f6380;      /* tekst pomocniczy */
+  --primary: #0d3b6e;         /* granat – kolor przewodni */
+  --primary-hover: #0a2e57;
+  --on-primary: #ffffff;      /* tekst na granatowym tle */
+  --accent: #2b8ad8;          /* błękit nieba – akcent */
+  --accent-soft: #d6eafb;     /* bardzo jasny błękit */
+  --border: #c6d8ea;          /* obramowania */
+  --header-bg: #0d3b6e;       /* tło nagłówka i stopki */
+  --header-text: #ffffff;
+  --header-link-hover: rgba(255, 255, 255, 0.14);
+  --cloud: #ffffff;           /* wypełnienie chmurki „Motyw” */
+  --cloud-text: #0d3b6e;
+  --note-bg: #fff6e0;         /* tło uwag (jak światła pasa startowego) */
+  --note-border: #f2a33a;
+  --focus: #f2a33a;           /* obwódka elementu wybranego klawiszem Tab */
+  --shadow: 0 8px 24px rgba(13, 59, 110, 0.12);
+  --radius: 14px;             /* zaokrąglenie rogów */
+  --radius-big: 40px;         /* zaokrąglenie dużego pola na stronie Start */
+}
+
+/* ---------- 2. KOLORY: motyw ciemny (grafit) ----------
+   Na razie nieużywany. W etapie 8 skrypt theme.js doda do <html>
+   atrybut data-theme="dark" i wtedy zadziałają te wartości. */
+:root[data-theme="dark"] {
+  --bg: #15191f;
+  --surface: #1e242c;
+  --surface-alt: #27303b;
+  --text: #e6edf5;
+  --text-muted: #9fb0c4;
+  --primary: #5bb0f0;
+  --primary-hover: #7cc1f4;
+  --on-primary: #0d1620;
+  --accent: #5bb0f0;
+  --accent-soft: #1f3550;
+  --border: #36414e;
+  --header-bg: #0f1419;
+  --header-text: #e6edf5;
+  --header-link-hover: rgba(255, 255, 255, 0.08);
+  --cloud: #27303b;
+  --cloud-text: #e6edf5;
+  --note-bg: #2c2618;
+  --note-border: #c98a2e;
+  --focus: #f2a33a;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- 3. PODSTAWY ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* szerokość elementu obejmuje ramkę i odstęp */
+}
+
+html {
+  scroll-behavior: smooth; /* płynne przewijanie do #o-projekcie i #media */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* stopka zawsze na dole ekranu */
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+
+a {
+  color: var(--accent);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Wyraźna obwódka przy poruszaniu się klawiszem Tab */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---------- 4. NAGŁÓWEK ---------- */
+.site-header {
+  position: relative; /* punkt odniesienia dla rozwijanego menu na telefonie */
+  background: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: var(--shadow);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 90px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Logo: ikona samolotu + napis „airdata” */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--header-text);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+}
+
+.logo-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.logo-text strong {
+  font-weight: 700;
+}
+
+/* Menu główne (komputer): przyciski obok siebie */
+.main-nav {
+  display: flex;
+  gap: 10px;
+  margin-left: auto; /* przesuwa menu na środek-prawo, jak na makiecie */
+}
+
+.nav-link {
+  min-width: 120px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  color: var(--header-text);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.nav-link:hover {
+  background: var(--header-link-hover);
+}
+
+/* Podświetlenie strony, na której jesteśmy */
+.nav-link[aria-current="page"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Przycisk ☰ – na komputerze ukryty */
+.menu-btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--header-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Prawa strona nagłówka: Motyw i Konto */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+/* Wspólne ustawienia przycisków w nagłówku */
+.theme-btn,
+.account-btn {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Motyw – przycisk w kształcie chmurki */
+.theme-btn {
+  position: relative;
+  width: 104px;
+  height: 62px;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.cloud-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--cloud);
+  transition: transform 0.2s;
+}
+
+.theme-btn:hover .cloud-shape {
+  transform: translateY(-2px); /* chmurka lekko „unosi się” */
+}
+
+.theme-btn-label {
+  position: relative; /* napis nad chmurką */
+  display: block;
+  padding-top: 14px;
+  color: var(--cloud-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Konto – okrągły przycisk */
+.account-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: var(--header-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.account-btn:hover {
+  background: var(--header-link-hover);
+}
+
+.account-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* ---------- 5. TREŚĆ STRONY ---------- */
+.main {
+  flex: 1; /* treść wypełnia miejsce między nagłówkiem a stopką */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+}
+
+/* Przyciski ogólne */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- 6. STRONA START: duże pole (hero) ---------- */
+.hero {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 44px 48px;
+  display: grid;
+  grid-template-columns: 1fr 260px; /* tekst po lewej, obrazek po prawej */
+  gap: 32px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-big);
+  box-shadow: var(--shadow);
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero-desc {
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: var(--surface-alt);
+}
+
+.hero-desc h1 {
+  font-size: 1.75rem;
+  color: var(--primary);
+}
+
+.hero-desc p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.hero-desc .eyebrow {
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-link {
+  font-size: 1.05rem;
+}
+
+.hero-img img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* ---------- 7. STRONA START: cztery kafelki ---------- */
+.tiles {
+  max-width: 900px;
+  margin: 72px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.tile {
+  min-height: 130px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* ikony i nazwy w jednej linii we wszystkich kafelkach */
+  gap: 6px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.tile:hover {
+  transform: translateY(-4px); /* kafelek „startuje” do góry */
+  border-color: var(--accent);
+}
+
+.tile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--primary);
+}
+
+.tile-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tile-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.tile-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ---------- 8. PANELE (karty z treścią) ---------- */
+.panel {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  padding: 28px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+/* Miejsce na przyszłe funkcje (ramka z przerywaną linią) */
+.placeholder {
+  margin: 0 0 16px;
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+}
+
+/* Uwaga o podwójnym liczeniu pasażerów */
+.note {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-border);
+  border-radius: 6px;
+}
+
+/* Sekcja „O projekcie” na stronie Start */
+.about {
+  margin-top: 72px;
+  scroll-margin-top: 20px;
+}
+
+.about h2 {
+  color: var(--primary);
+}
+
+.facts {
+  list-style: none;
+  margin: 20px 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.facts li {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+}
+
+.facts strong {
+  color: var(--primary);
+}
+
+/* Nagłówek podstron */
+.page-head {
+  max-width: 900px;
+  margin: 0 auto 28px;
+}
+
+.page-head h1 {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.lead {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* Lista odnośników w sekcji Media */
+.link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.link-list li {
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--surface-alt);
+}
+
+.link-list a {
+  font-weight: 700;
+}
+
+.link-list span {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+#media {
+  scroll-margin-top: 20px;
+}
+
+/* ---------- 9. STOPKA ---------- */
+.site-footer {
+  background: var(--header-bg);
+  color: var(--header-text);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Mniejsze logo w stopce */
+.logo--footer .logo-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.logo--footer .logo-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.logo--footer .logo-text {
+  font-size: 1.25rem;
+}
+
+.footer-nav {
+  margin-left: auto; /* linki stopki po prawej stronie */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-link {
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  color: var(--header-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.footer-link:hover {
+  background: var(--header-link-hover);
+}
+
+/* „Media” – owalny przycisk, jak na makiecie */
+.footer-link--round {
+  width: 70px;
+  height: 50px;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.footer-note {
+  margin: 0;
+  padding: 0 20px 14px;
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+/* ---------- 10. TELEFON (ekran do 760 px szerokości) ---------- */
+@media (max-width: 760px) {
+  .header-inner {
+    min-height: 60px;
+    padding: 8px 10px;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logo-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+  }
+
+  /* ☰ widoczny obok logo */
+  .menu-btn {
+    display: block;
+  }
+
+  /* Menu schowane, dopóki nie klikniemy ☰ */
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: 0;
+    padding: 10px;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--header-bg);
+    box-shadow: var(--shadow);
+  }
+
+  /* Klasę menu-open dodaje skrypt js/menu.js po kliknięciu ☰ */
+  .site-header.menu-open .main-nav {
+    display: flex;
+  }
+
+  .nav-link {
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .theme-btn {
+    width: 78px;
+    height: 46px;
+  }
+
+  .theme-btn-label {
+    padding-top: 10px;
+    font-size: 0.8rem;
+  }
+
+  .account-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 0.6rem;
+  }
+
+  .account-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .main {
+    padding: 10px 10px 40px;
+  }
+
+  /* Start: obrazek na górze, pod nim tekst i odnośnik */
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .hero-img {
+    order: -1; /* obrazek przed tekstem */
+  }
+
+  .hero-img img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  .hero-desc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .hero-desc h1 {
+    font-size: 1.35rem;
+  }
+
+  .hero-link {
+    align-self: center;
+  }
+
+  /* Kafelki jeden pod drugim, jako wąskie przyciski */
+  .tiles {
+    max-width: 280px;
+    margin-top: 24px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .tile {
+    min-height: 48px;
+    padding: 8px 14px;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .tile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .tile-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tile-desc {
+    display: none; /* na telefonie tylko nazwa funkcji */
+  }
+
+  .about {
+    margin-top: 32px;
+  }
+
+  .panel {
+    padding: 20px 16px;
+  }
+
+  .page-head {
+    margin: 12px 4px 20px;
+  }
+
+  .page-head h1 {
+    font-size: 1.6rem;
+  }
+
+  /* Stopka: logo po lewej, linki po prawej (mniejsze) */
+  .footer-inner {
+    padding: 12px 10px 6px;
+    gap: 8px;
+  }
+
+  .logo--footer .logo-text {
+    display: none; /* w wąskiej stopce zostaje sama ikona */
+  }
+
+  .footer-nav {
+    gap: 6px;
+  }
+
+  .footer-link {
+    padding: 8px 8px;
+    font-size: 0.8rem;
+  }
+
+  .footer-link--round {
+    width: 58px;
+    height: 44px;
+    padding: 0;
+  }
+}
