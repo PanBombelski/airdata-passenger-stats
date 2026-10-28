@@ -811,3 +811,8 @@ button:focus-visible {
     padding: 0;
   }
 }
+.logo-img {
+    height: 80px;
+    width: auto;
+    vertical-align: middle;
+}
