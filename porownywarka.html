@@ -3,22 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Porównywarka lotnisk – airdata</title>
+  <title>Porównywarka lotnisk – AeroStat</title>
   <meta name="description" content="Porównanie liczby pasażerów dwóch lotnisk w czasie.">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/menu.js" defer></script>
+  <script src="js/porownywarka.js" defer></script>
+  <script src="js/porownywarka.js" defer></script>
 </head>
 <body>
   <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="logo" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+      <a class="logo" href="index.html" aria-label="AeroStat – strona główna">
+    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+</a>
 
       <!-- Przycisk ☰ widoczny tylko na telefonie -->
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -54,38 +53,47 @@
   <main class="main page">
     <div class="page-head">
       <h1>Porównywarka lotnisk</h1>
-      <p class="lead">Wybierz dwa lotniska i porównaj liczbę ich pasażerów na wykresie liniowym, kwartał po kwartale.</p>
+      <p class="lead">Wybierz 2 lub 3 lotniska oraz lata do porównania. Porównaj liczbę pasażerów lub operacji pasażerskich w ujęciu rocznym albo kwartalnym.</p>
     </div>
 
     <!-- FILTRY: pola wyboru pojawią się w kolejnych etapach -->
     <section class="panel" aria-labelledby="filtry-tytul">
       <h2 class="panel-title" id="filtry-tytul">Filtry</h2>
-      <p class="placeholder">Tu pojawi się wybór dwóch lotnisk (etap 4).</p>
+      <div class="por-filters">
+        <label>Rodzaj danych<select id="por-metric"><option value="pasazerowie">Liczba pasażerów</option><option value="operacje">Liczba operacji lotniczych</option></select></label>
+        <label>Lotnisko 1<select id="por-airport-1" aria-label="Pierwsze lotnisko"></select></label>
+        <label>Lotnisko 2<select id="por-airport-2" aria-label="Drugie lotnisko"></select></label>
+        <label>Lotnisko 3 (opcjonalnie)<select id="por-airport-3" aria-label="Trzecie lotnisko"></select></label>
+        <label>Rok od<select id="por-from"></select></label>
+        <label>Rok do<select id="por-to"></select></label>
+        <label>Widok<select id="por-granularity"><option value="year">Roczny</option><option value="quarter">Kwartalny</option></select></label>
+      </div>
+      <p class="por-hint">W widoku rocznym sumujemy kwartały I–IV. Brakujący kwartał oznacza brak pełnej sumy rocznej.</p>
     </section>
 
     <!-- WYNIK: tabela lub wykres -->
     <section class="panel" aria-labelledby="wynik-tytul">
       <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
-      <p class="placeholder">Tu pojawi się wykres liniowy i tabela z danymi (etap 4).</p>
+      <p id="por-status" role="status" aria-live="polite">Wczytywanie danych…</p>
+      <div class="por-legend" id="por-legend"></div>
+      <div class="por-chart-scroll"><svg id="por-chart" viewBox="0 0 900 370" role="img" aria-label="Wykres liniowy porównania lotnisk"></svg></div>
+      <div class="por-table-scroll"><table class="por-table"><thead><tr id="por-table-head"><th>Okres</th></tr></thead><tbody id="por-table-body"></tbody></table></div>
       <p class="note">
         Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
         odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
         jest większa niż liczba osób, które faktycznie poleciały.
       </p>
       <!-- Pobieranie CSV zadziała w etapie 7 -->
-      <button class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
+      <button class="btn btn-secondary" id="por-download" type="button" disabled>Pobierz CSV</button>
     </section>
   </main>
 
   <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <a class="logo logo--footer" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+     <a class="logo logo--footer" href="index.html" aria-label="AeroStat – strona główna">
+    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+</a>
 
       <nav class="footer-nav" aria-label="Stopka">
         <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>

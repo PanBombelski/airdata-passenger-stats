@@ -816,3 +816,60 @@ button:focus-visible {
     width: auto;
     vertical-align: middle;
 }
+.ranking-filtry { display: flex; flex-wrap: wrap; gap: 18px; }
+.ranking-filtry label { display: flex; flex-direction: column; gap: 7px; font-weight: 600; }
+.ranking-filtry select { min-width: 170px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--surface); font: inherit; }
+.ranking-tabela-kontener { overflow-x: auto; margin: 16px 0 22px; }
+.ranking-tabela { width: 100%; border-collapse: collapse; }
+.ranking-tabela th, .ranking-tabela td { padding: 12px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+.ranking-tabela th { color: var(--primary); }
+.ranking-liczba { text-align: right !important; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ranking-tabela td:last-child { width: 22%; min-width: 95px; }
+.ranking-slupek { height: 14px; border-radius: 4px; background: var(--accent); }
+@media (max-width: 760px) { .ranking-tabela { font-size: .85rem; } .ranking-tabela th, .ranking-tabela td { padding: 8px 5px; } }
+
+.por-filters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.por-filters label { display:grid; gap:6px; font-weight:600; color:var(--text); }
+.por-filters select { width:100%; min-width:0; padding:12px; border:1px solid var(--border); border-radius:9px; background:var(--surface); color:var(--text); font:inherit; }
+.por-hint { margin:16px 0 0; font-size:.9rem; color:var(--text-muted); }
+#por-status { color:var(--text-muted); margin:0 0 14px; }
+.por-legend { display:flex; flex-wrap:wrap; gap:9px 20px; margin:0 0 14px; }
+.por-legend-item { display:inline-flex; align-items:center; gap:8px; font-size:.92rem; font-weight:600; }
+.por-legend-item i { width:12px; height:12px; border-radius:50%; flex:none; }
+.por-chart-scroll { width:100%; overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:12px; }
+#por-chart { display:block; min-width:600px; width:100%; height:auto; }
+.por-table-scroll { overflow-x:auto; max-height:360px; overflow-y:auto; margin:18px 0; }
+.por-table { border-collapse:collapse; width:100%; min-width:580px; font-size:.9rem; }
+.por-table th,.por-table td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); }
+.por-table thead th { position:sticky; top:0; background:var(--surface-alt); color:var(--primary); }
+.por-table tr:nth-child(even) { background:var(--surface-alt); }
+@media(max-width:760px){ .por-filters{grid-template-columns:1fr;} }
+
+
+.season-filters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.season-filters label { display:flex; flex-direction:column; gap:6px; font-weight:600; }
+.season-filters select { width:100%; min-width:0; padding:11px 12px; border:1px solid var(--border); border-radius:9px; background:var(--surface); color:var(--text); font:inherit; }
+#season-status { color:var(--text-muted); margin:0 0 15px; }
+.season-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:25px; }
+.season-stat { background:var(--surface-alt); border:1px solid var(--border); border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:6px; }
+.season-stat-label { font-size:.85rem; color:var(--text-muted); }
+.season-stat-value { font-size:1.15rem; color:var(--text); overflow-wrap:anywhere; }
+.season-subtitle { color:var(--primary); font-size:1.1rem; margin:24px 0 12px; }
+.season-bars { display:grid; gap:14px; }
+.season-bar-row { display:grid; grid-template-columns:40px minmax(0,1fr) 125px; align-items:center; gap:12px; }
+.season-bar-label { font-weight:700; }
+.season-bar-track { height:26px; border-radius:7px; background:var(--surface-alt); overflow:hidden; }
+.season-bar-fill { height:100%; border-radius:7px; }
+.season-bar-number { text-align:right; font-variant-numeric:tabular-nums; }
+.season-share-wrap { display:flex; align-items:center; flex-wrap:wrap; gap:30px; }
+.season-donut { width:190px; height:190px; border-radius:50%; position:relative; display:grid; place-items:center; flex-shrink:0; }
+.season-donut::before { content:""; position:absolute; inset:38px; border-radius:50%; background:var(--surface); }
+.season-donut-center { z-index:1; font-size:1.4rem; font-weight:700; color:var(--text); }
+.season-legend { display:grid; gap:10px; }
+.season-legend-item { display:flex; gap:9px; align-items:center; }
+.season-legend-dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+.season-table-scroll { overflow-x:auto; }
+.season-table { width:100%; border-collapse:collapse; }
+.season-table th,.season-table td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--border); }
+.season-table th { background:var(--surface-alt); color:var(--text); }
+@media(max-width:760px) { .season-filters,.season-stats {grid-template-columns:1fr;} .season-bar-row {grid-template-columns:30px minmax(0,1fr) 90px; gap:6px; font-size:.85rem;} .season-donut {width:160px;height:160px;} }
