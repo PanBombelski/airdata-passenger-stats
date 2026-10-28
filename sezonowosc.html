@@ -3,22 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sezonowość ruchu – airdata</title>
+  <title>Sezonowość ruchu – AeroStat</title>
   <meta name="description" content="Udział każdego kwartału w rocznej liczbie pasażerów wybranego lotniska.">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/menu.js" defer></script>
+  <script src="js/sezonowosc.js" defer></script>
 </head>
 <body>
   <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="logo" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+      <a class="logo" href="index.html" aria-label="AeroStat – strona główna">
+    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+</a>
 
       <!-- Przycisk ☰ widoczny tylko na telefonie -->
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -60,32 +58,57 @@
     <!-- FILTRY: pola wyboru pojawią się w kolejnych etapach -->
     <section class="panel" aria-labelledby="filtry-tytul">
       <h2 class="panel-title" id="filtry-tytul">Filtry</h2>
-      <p class="placeholder">Tu pojawi się wybór lotniska (etap 6).</p>
+      <div class="season-filters">
+        <label>Lotnisko
+          <select id="season-airport" aria-label="Wybierz lotnisko"></select>
+        </label>
+        <label>Rok
+          <select id="season-year" aria-label="Wybierz rok"></select>
+        </label>
+        <label>Rodzaj danych
+          <select id="season-metric" aria-label="Rodzaj danych">
+            <option value="pasazerowie">Liczba pasażerów</option>
+            <option value="operacje">Liczba operacji lotniczych</option>
+          </select>
+        </label>
+      </div>
     </section>
 
     <!-- WYNIK: tabela lub wykres -->
     <section class="panel" aria-labelledby="wynik-tytul">
       <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
-      <p class="placeholder">Tu pojawi się tabela z udziałami kwartałów (etap 6).</p>
+      <p id="season-status" role="status" aria-live="polite">Wczytywanie danych…</p>
+      <div id="season-results" hidden>
+        <div class="season-stats" id="season-stats"></div>
+        <h3 class="season-subtitle">Ruch w poszczególnych kwartałach</h3>
+        <div class="season-bars" id="season-bars" role="img" aria-label="Wykres kwartalny"></div>
+        <h3 class="season-subtitle">Udział kwartałów w roku</h3>
+        <div class="season-share-wrap">
+          <div id="season-donut" class="season-donut" role="img" aria-label="Udział procentowy kwartałów"></div>
+          <div id="season-share-legend" class="season-legend"></div>
+        </div>
+        <h3 class="season-subtitle">Dokładne dane</h3>
+        <div class="season-table-scroll"><table class="season-table">
+          <thead><tr><th scope="col">Kwartał</th><th scope="col" id="season-table-value">Pasażerowie</th><th scope="col">Udział w roku</th></tr></thead>
+          <tbody id="season-table-body"></tbody>
+        </table></div>
+      </div>
       <p class="note">
         Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
         odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
         jest większa niż liczba osób, które faktycznie poleciały.
       </p>
       <!-- Pobieranie CSV zadziała w etapie 7 -->
-      <button class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
+      <button class="btn btn-secondary" id="season-download" type="button" disabled>Pobierz CSV</button>
     </section>
   </main>
 
   <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <a class="logo logo--footer" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+      <a class="logo logo--footer" href="index.html" aria-label="AeroStat – strona główna">
+    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+</a>
 
       <nav class="footer-nav" aria-label="Stopka">
         <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>

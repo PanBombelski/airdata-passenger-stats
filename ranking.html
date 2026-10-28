@@ -8,17 +8,16 @@
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/menu.js" defer></script>
+  <script src="js/ranking.js" defer></script>
+  <script src="js/ranking.js" defer></script>
 </head>
 <body>
   <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="logo" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+      <a class="logo" href="index.html" aria-label="AeroStat – strona główna">
+          <img src="img/logo.png" alt="AeroStat" class="logo-img">
+        </a>
 
       <!-- Przycisk ☰ widoczny tylko na telefonie -->
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
@@ -54,38 +53,56 @@
   <main class="main page">
     <div class="page-head">
       <h1>Ranking lotnisk</h1>
-      <p class="lead">Top 10 lotnisk według liczby obsłużonych pasażerów w wybranym roku i kwartale.</p>
+      <p class="lead">Top 10 lotnisk według liczby pasażerów lub operacji pasażerskich w wybranym okresie.</p>
     </div>
 
-    <!-- FILTRY: pola wyboru pojawią się w kolejnych etapach -->
+    <!-- FILTRY: wybór roku i kwartału -->
     <section class="panel" aria-labelledby="filtry-tytul">
       <h2 class="panel-title" id="filtry-tytul">Filtry</h2>
-      <p class="placeholder">Tu pojawi się wybór roku i kwartału (etap 3).</p>
+      <div class="ranking-filtry">
+        <label for="ranking-metric">Dane
+          <select id="ranking-metric" aria-label="Wybierz rodzaj danych"><option value="pasazerowie">Liczba pasażerów</option><option value="operacje">Liczba operacji lotniczych</option></select>
+        </label>
+        <label for="ranking-rok">Rok
+          <select id="ranking-rok" aria-label="Wybierz rok"></select>
+        </label>
+        <label for="ranking-kwartal">Kwartał
+          <select id="ranking-kwartal" aria-label="Wybierz kwartał">
+            <option value="1">I kwartał</option>
+            <option value="2">II kwartał</option>
+            <option value="3">III kwartał</option>
+            <option value="4">IV kwartał</option>
+          </select>
+        </label>
+      </div>
     </section>
 
-    <!-- WYNIK: tabela lub wykres -->
+    <!-- WYNIK: ranking danych z CSV -->
     <section class="panel" aria-labelledby="wynik-tytul">
       <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
-      <p class="placeholder">Tu pojawi się tabela z rankingiem (etap 3).</p>
+      <p id="ranking-status" role="status" aria-live="polite">Wczytywanie danych...</p>
+      <div class="ranking-tabela-kontener">
+        <table id="ranking-table" class="ranking-tabela" hidden>
+          <thead><tr><th scope="col">Miejsce</th><th scope="col">Lotnisko</th><th scope="col" id="ranking-value-label">Pasażerowie</th><th scope="col">Wykres</th></tr></thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+      </div>
       <p class="note">
         Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
         odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
         jest większa niż liczba osób, które faktycznie poleciały.
       </p>
-      <!-- Pobieranie CSV zadziała w etapie 7 -->
-      <button class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
+      <!-- Pobieranie rankingu do CSV -->
+      <button id="ranking-pobierz" class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
     </section>
   </main>
 
   <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <a class="logo logo--footer" href="index.html" aria-label="airdata – strona główna">
-        <span class="logo-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><path d="M12 2c1.2 0 1.6 1.4 1.6 2.6v4.9l7.9 4.8v2.1l-7.9-2.4v4.4l2.4 1.9V22L12 21.1 8 22v-1.7l2.4-1.9v-4.4l-7.9 2.4v-2.1l7.9-4.8V4.6C10.4 3.4 10.8 2 12 2z"/></g></svg>
-        </span>
-        <span class="logo-text">air<strong>data</strong></span>
-      </a>
+      <a class="logo logo--footer" href="index.html" aria-label="AeroStat – strona główna">
+          <img src="img/logo.png" alt="AeroStat" class="logo-img">
+        </a>
 
       <nav class="footer-nav" aria-label="Stopka">
         <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>
