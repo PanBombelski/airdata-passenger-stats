@@ -1239,3 +1239,17 @@ button:focus-visible {
     right: -6px;
   }
 }
+
+/* =========================================================
+   STRONA ZMIANY: zmiana z jawnym znakiem i lista pominiętych
+   ========================================================= */
+
+.zmiana-liczba {
+  font-weight: 700;
+}
+
+.zmiany-pominiete {
+  margin: 12px 0 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}

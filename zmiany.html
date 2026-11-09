@@ -10,6 +10,7 @@
   <script src="js/theme.js"></script>
   <script src="js/menu.js" defer></script>
   <script src="js/konto.js" defer></script>
+  <script src="js/zmiany.js" defer></script>
 </head>
 <body>
   <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
@@ -115,23 +116,54 @@
       <p class="lead">Lotniska z największym wzrostem lub spadkiem liczby pasażerów między dwoma wybranymi latami.</p>
     </div>
 
-    <!-- FILTRY: pola wyboru pojawią się w kolejnych etapach -->
+    <!-- FILTRY: rodzaj danych, dwa lata i kierunek zmiany -->
     <section class="panel" aria-labelledby="filtry-tytul">
       <h2 class="panel-title" id="filtry-tytul">Filtry</h2>
-      <p class="placeholder">Tu pojawi się wybór dwóch lat (etap 5).</p>
+      <div class="ranking-filtry">
+        <label for="zmiany-metric">Dane
+          <select id="zmiany-metric"><option value="pasazerowie">Liczba pasażerów</option><option value="operacje">Liczba operacji lotniczych</option></select>
+        </label>
+        <label for="zmiany-rok-poczatkowy">Rok początkowy
+          <select id="zmiany-rok-poczatkowy"></select>
+        </label>
+        <label for="zmiany-rok-koncowy">Rok końcowy
+          <select id="zmiany-rok-koncowy"></select>
+        </label>
+        <label for="zmiany-kierunek">Pokaż
+          <select id="zmiany-kierunek">
+            <option value="wszystkie">Wzrosty i spadki</option>
+            <option value="wzrosty">Tylko wzrosty</option>
+            <option value="spadki">Tylko spadki</option>
+          </select>
+        </label>
+      </div>
     </section>
 
-    <!-- WYNIK: tabela lub wykres -->
+    <!-- WYNIK: tabela zmian -->
     <section class="panel" aria-labelledby="wynik-tytul">
       <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
-      <p class="placeholder">Tu pojawi się tabela zmian (etap 5).</p>
+      <p id="zmiany-status" role="status" aria-live="polite">Wczytywanie danych...</p>
+      <div class="ranking-tabela-kontener">
+        <table id="zmiany-table" class="ranking-tabela" hidden>
+          <thead><tr>
+            <th scope="col">Miejsce</th>
+            <th scope="col">Lotnisko</th>
+            <th scope="col" id="zmiany-th-a">Rok początkowy</th>
+            <th scope="col" id="zmiany-th-b">Rok końcowy</th>
+            <th scope="col">Zmiana</th>
+            <th scope="col">Zmiana %</th>
+          </tr></thead>
+          <tbody id="zmiany-body"></tbody>
+        </table>
+      </div>
+      <p class="zmiany-pominiete" id="zmiany-pominiete"></p>
       <p class="note">
         <strong>Uwaga:</strong> pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
         odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
         jest większa niż liczba osób, które faktycznie poleciały.
       </p>
-      <!-- Pobieranie CSV zadziała w etapie 7 -->
-      <button class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
+      <!-- Pobieranie tabeli zmian do CSV -->
+      <button id="zmiany-pobierz" class="btn btn-secondary" type="button" disabled>Pobierz CSV</button>
     </section>
   </main>
 
