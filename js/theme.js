@@ -8,8 +8,8 @@
 // =========================================================
 
 // Nazwy wpisów w localStorage (pamięć przeglądarki na tym komputerze)
-const KLUCZ_MOTYW = 'airdata-motyw';   // wartości: 'light', 'dark', 'system'
-const KLUCZ_LITERY = 'airdata-litery'; // wartość: numer poziomu 0–3
+const KLUCZ_MOTYW = 'aerostat-motyw';   // wartości: 'light', 'dark', 'system'
+const KLUCZ_LITERY = 'aerostat-litery'; // wartość: numer poziomu 0–3
 
 // Wielkość liter w procentach. Poziom 1 to normalna wielkość (100%).
 const POZIOMY_LITER = [87.5, 100, 118, 137];

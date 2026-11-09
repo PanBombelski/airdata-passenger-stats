@@ -12,9 +12,9 @@
 // =========================================================
 
 // Nazwy wpisów w localStorage
-const KLUCZ_KONTA = 'airdata-konta';       // lista: [{ login, haslo }]
-const KLUCZ_SESJA = 'airdata-sesja';       // login zalogowanej osoby albo null
-const KLUCZ_ULUBIONE = 'airdata-ulubione'; // obiekt: { login: [nazwy lotnisk] }
+const KLUCZ_KONTA = 'aerostat-konta';       // lista: [{ login, haslo }]
+const KLUCZ_SESJA = 'aerostat-sesja';       // login zalogowanej osoby albo null
+const KLUCZ_ULUBIONE = 'aerostat-ulubione'; // obiekt: { login: [nazwy lotnisk] }
 
 // Lotniska z pliku data/LOTY.csv (kolumna port_lotniczy), w kolejności alfabetycznej
 const LOTNISKA = [
@@ -34,6 +34,11 @@ const LOTNISKA = [
   'Zielona Góra - Babimost',
   'Łódź',
 ];
+
+// Funkcje panelu Konto, z których korzystają gwiazdki ulubionych.
+// Właściwą treść dostają w uruchomPanelKonta(); do tego czasu nic nie robią.
+let otworzPanelKonta = function () {};
+let odswiezPanelKonta = function () {};
 
 // --- Odczyt i zapis z localStorage (zawsze w try/catch) ---
 function odczytaj(klucz, domyslna) {
@@ -201,7 +206,7 @@ function uruchomPanelKonta() {
   });
 
   // --- Widok: logowanie albo zalogowana osoba ---
-  function odswiezWidok() {
+  function odswiezWidokPanelu() {
     const login = pobierzZalogowanego();
     if (!login) {
       widokLogowania.hidden = false;
@@ -242,6 +247,19 @@ function uruchomPanelKonta() {
       listaUlubionych.appendChild(pozycja);
     });
   }
+
+  // Pełne odświeżenie: panel oraz wszystkie gwiazdki na stronie
+  function odswiezWidok() {
+    odswiezWidokPanelu();
+    odswiezGwiazdki();
+  }
+
+  // Udostępniamy te funkcje gwiazdkom ulubionych (są poza panelem)
+  otworzPanelKonta = function (komunikat) {
+    ustawPanel(true);
+    komunikatKonta.textContent = komunikat || '';
+  };
+  odswiezPanelKonta = odswiezWidok;
 
   // --- Logowanie ---
   formLogowania.addEventListener('submit', function (zdarzenie) {
@@ -311,8 +329,147 @@ function uruchomPanelKonta() {
   odswiezWidok();
 }
 
+// ---------------------------------------------------------
+// Gwiazdki ulubionych lotnisk (☆ = nie ma w ulubionych, ★ = jest)
+// - w tabelach Rankingu i Zmian: gwiazdka przed nazwą lotniska,
+// - w Porównywarce i Sezonowości: gwiazdka obok listy wyboru lotniska.
+// Ulubione zapisują się tylko po zalogowaniu.
+// ---------------------------------------------------------
+
+// Tabele, w których wiersze zawierają nazwę lotniska
+const TABELE_Z_LOTNISKAMI = ['ranking-body', 'zmiany-body'];
+// Listy wyboru lotniska, przy których stawiamy gwiazdkę
+const LISTY_LOTNISK = ['por-airport-1', 'por-airport-2', 'por-airport-3', 'season-airport'];
+
+function czyUlubione(nazwa) {
+  const login = pobierzZalogowanego();
+  return login ? pobierzUlubione(login).indexOf(nazwa) !== -1 : false;
+}
+
+// Dodaje lotnisko do ulubionych albo je usuwa
+function przelaczUlubione(nazwa) {
+  const login = pobierzZalogowanego();
+  if (!login) {
+    otworzPanelKonta('Zaloguj się, aby zapisywać ulubione lotniska.');
+    return;
+  }
+  const lista = pobierzUlubione(login);
+  const nowaLista = lista.indexOf(nazwa) === -1
+    ? lista.concat([nazwa])
+    : lista.filter(function (n) { return n !== nazwa; });
+  zapiszUlubione(login, nowaLista);
+  odswiezPanelKonta(); // odświeża listę w panelu i wszystkie gwiazdki
+}
+
+// Ustawia wygląd i opis gwiazdki dla danego lotniska
+function ustawGwiazdke(przycisk, nazwa) {
+  const ulubione = czyUlubione(nazwa);
+  przycisk.textContent = ulubione ? '★' : '☆';
+  przycisk.setAttribute('aria-pressed', ulubione ? 'true' : 'false');
+  przycisk.setAttribute('aria-label', 'Ulubione lotnisko: ' + nazwa);
+  przycisk.title = ulubione ? 'Usuń z ulubionych' : 'Dodaj do ulubionych';
+}
+
+function utworzGwiazdke(nazwa) {
+  const przycisk = document.createElement('button');
+  przycisk.type = 'button';
+  przycisk.className = 'fav-star';
+  przycisk.dataset.lotnisko = nazwa;
+  przycisk.addEventListener('click', function (zdarzenie) {
+    // Bez tego kliknięcie „dotarłoby” do dokumentu i od razu zamknęło otwarty panel
+    if (!pobierzZalogowanego()) {
+      zdarzenie.stopPropagation();
+    }
+    przelaczUlubione(przycisk.dataset.lotnisko);
+  });
+  ustawGwiazdke(przycisk, nazwa);
+  return przycisk;
+}
+
+// Dodaje gwiazdkę do wiersza tabeli (do komórki, która zaczyna się nazwą lotniska)
+function udekorujWiersz(wiersz) {
+  if (wiersz.querySelector('.fav-star')) {
+    return;
+  }
+  const komorki = wiersz.querySelectorAll('td');
+  for (let i = 0; i < komorki.length; i++) {
+    const pierwszy = komorki[i].firstChild;
+    const tekst = pierwszy && pierwszy.nodeType === Node.TEXT_NODE ? pierwszy.textContent.trim() : '';
+    if (LOTNISKA.indexOf(tekst) !== -1) {
+      komorki[i].classList.add('fav-cell');
+      komorki[i].insertBefore(utworzGwiazdke(tekst), pierwszy);
+      wiersz.classList.toggle('fav-row', czyUlubione(tekst));
+      return;
+    }
+  }
+}
+
+// Gwiazdka obok listy wyboru lotniska
+function dodajGwiazdkeDoListy(id) {
+  const lista = document.getElementById(id);
+  if (!lista) {
+    return;
+  }
+  // Lista i gwiazdka w jednej linii
+  const obudowa = document.createElement('span');
+  obudowa.className = 'fav-select';
+  lista.parentNode.insertBefore(obudowa, lista);
+  obudowa.appendChild(lista);
+
+  const gwiazdka = utworzGwiazdke(lista.value);
+  obudowa.appendChild(gwiazdka);
+
+  function aktualizuj() {
+    const nazwa = lista.value;
+    gwiazdka.dataset.lotnisko = nazwa;
+    gwiazdka.hidden = LOTNISKA.indexOf(nazwa) === -1; // np. pusta opcja „brak”
+    if (!gwiazdka.hidden) {
+      ustawGwiazdke(gwiazdka, nazwa);
+    }
+  }
+
+  lista.addEventListener('change', aktualizuj);
+  // Opcje dochodzą dopiero po wczytaniu CSV – wtedy też odświeżamy gwiazdkę
+  new MutationObserver(aktualizuj).observe(lista, { childList: true });
+  aktualizuj();
+}
+
+// Odświeża wszystkie gwiazdki i podświetlenie wierszy (np. po zalogowaniu)
+function odswiezGwiazdki() {
+  document.querySelectorAll('.fav-star').forEach(function (przycisk) {
+    const nazwa = przycisk.dataset.lotnisko;
+    if (LOTNISKA.indexOf(nazwa) === -1) {
+      return;
+    }
+    ustawGwiazdke(przycisk, nazwa);
+    const wiersz = przycisk.closest('tr');
+    if (wiersz) {
+      wiersz.classList.toggle('fav-row', czyUlubione(nazwa));
+    }
+  });
+}
+
+function uruchomGwiazdki() {
+  TABELE_Z_LOTNISKAMI.forEach(function (id) {
+    const tbody = document.getElementById(id);
+    if (!tbody) {
+      return;
+    }
+    // Skrypty stron rysują tabele na nowo po każdej zmianie filtrów,
+    // więc obserwujemy dodawanie wierszy i za każdym razem dokładamy gwiazdki.
+    const obserwator = new MutationObserver(function () {
+      tbody.querySelectorAll('tr').forEach(udekorujWiersz);
+    });
+    obserwator.observe(tbody, { childList: true });
+    tbody.querySelectorAll('tr').forEach(udekorujWiersz);
+  });
+
+  LISTY_LOTNISK.forEach(dodajGwiazdkeDoListy);
+}
+
 // Uruchamiamy po wczytaniu HTML
 document.addEventListener('DOMContentLoaded', function () {
   uruchomPanelKonta();
   obsluzRejestracje();
+  uruchomGwiazdki();
 });

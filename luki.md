@@ -1,6 +1,6 @@
 # Security gaps (luki.md)
 
-This file lists the security weaknesses noticed in the airdata prototype.
+This file lists the security weaknesses noticed in the AeroStat prototype.
 Following the project rules, these gaps are **documented, not fixed**.
 Each entry says where the gap is, why it matters and how it could be fixed later.
 
@@ -56,7 +56,7 @@ They are not fixed in this version and are kept visible for the course.
 
 - **Stage:** 9 (Konto / logowanie)
 - **Status:** open (deliberate)
-- **Where:** `js/konto.js`, `localStorage` keys `airdata-konta`, `airdata-sesja`, `airdata-ulubione`
+- **Where:** `js/konto.js`, `localStorage` keys `aerostat-konta`, `aerostat-sesja`, `aerostat-ulubione`
 - **Description:** Registration saves every account as `{ login, haslo }` in plain text inside
   the browser's `localStorage`. There is no server and no hashing. Anyone who can open the browser
   developer tools on the same computer can read all passwords.
@@ -67,7 +67,7 @@ They are not fixed in this version and are kept visible for the course.
 
 - **Stage:** 9
 - **Status:** open (deliberate)
-- **Where:** `js/konto.js`, key `airdata-sesja`
+- **Where:** `js/konto.js`, key `aerostat-sesja`
 - **Description:** The "logged in" state is only a plain login name stored in `localStorage`.
   A person can type any existing login into the console (`localStorage.setItem(...)`) and appear
   logged in without knowing the password. The check is done only in the page's JavaScript.
@@ -99,7 +99,7 @@ They are not fixed in this version and are kept visible for the course.
 - **Status:** open (deliberate)
 - **Where:** all pages (`localStorage` is shared by the whole site)
 - **Description:** Any script running on this site, including a future injected script, can read
-  `airdata-konta` and change the stored data. The site has no Content-Security-Policy (see L3).
+  `aerostat-konta` and change the stored data. The site has no Content-Security-Policy (see L3).
 - **Possible fix:** Store nothing secret in the browser, and add a CSP header.
 
 ### P6. Form input is not sanitized

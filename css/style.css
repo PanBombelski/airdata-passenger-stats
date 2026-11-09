@@ -1,5 +1,5 @@
 /* =========================================================
-   airdata – arkusz stylów
+   AeroStat – arkusz stylów
    Kolory są zapisane jako zmienne CSS. Dzięki temu motyw
    ciemny (etap 8) podmienia tylko wartości zmiennych.
    ========================================================= */
@@ -25,6 +25,7 @@
   --note-bg: #fff6e0;         /* tło uwag (jak światła pasa startowego) */
   --note-border: #f2a33a;
   --danger: #b3261e;          /* komunikaty o błędzie */
+  --star: #d98a00;            /* gwiazdka ulubionych */
   --focus: #f2a33a;           /* obwódka elementu wybranego klawiszem Tab */
   --shadow: 0 8px 24px rgba(13, 59, 110, 0.12);
   --radius: 14px;             /* zaokrąglenie rogów */
@@ -54,6 +55,7 @@
   --note-bg: #2c2618;
   --note-border: #c98a2e;
   --danger: #ff8a80;
+  --star: #f5b942;
   --focus: #f2a33a;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
@@ -123,7 +125,7 @@ button:focus-visible {
   gap: 16px;
 }
 
-/* Logo: ikona samolotu + napis „airdata” */
+/* Logo: ikona samolotu + napis „AeroStat” */
 .logo {
   display: inline-flex;
   align-items: center;
@@ -1252,4 +1254,69 @@ button:focus-visible {
   margin: 12px 0 16px;
   font-size: 0.9rem;
   color: var(--text-muted);
+}
+
+/* =========================================================
+   ULUBIONE LOTNISKA: gwiazdki ☆ / ★
+   ========================================================= */
+
+.fav-star {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font: inherit;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--star);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s;
+}
+
+.fav-star:hover {
+  background: var(--surface-alt);
+  transform: scale(1.06);
+}
+
+.fav-star[aria-pressed="true"] {
+  border-color: var(--star);
+}
+
+.fav-star[hidden] {
+  display: none;
+}
+
+/* Lista wyboru lotniska i gwiazdka w jednej linii */
+.fav-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fav-select select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* W tabelach: mała gwiazdka bez ramki, przed nazwą lotniska */
+.fav-cell .fav-star {
+  width: 30px;
+  height: 30px;
+  margin-right: 6px;
+  font-size: 1.15rem;
+  vertical-align: middle;
+  background: none;
+  border: none;
+}
+
+.fav-cell .fav-star:hover {
+  background: var(--surface-alt);
+}
+
+/* Wiersz ulubionego lotniska jest lekko podświetlony */
+.fav-row td {
+  background: var(--accent-soft);
 }
