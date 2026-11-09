@@ -73,7 +73,7 @@ body {
   display: flex;
   flex-direction: column; /* stopka zawsze na dole ekranu */
   font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 1rem; /* względnie do wielkości liter ustawianej w panelu Motyw */
   line-height: 1.55;
   color: var(--text);
   background: var(--bg);
@@ -873,3 +873,141 @@ button:focus-visible {
 .season-table th,.season-table td { padding:11px 10px; text-align:left; border-bottom:1px solid var(--border); }
 .season-table th { background:var(--surface-alt); color:var(--text); }
 @media(max-width:760px) { .season-filters,.season-stats {grid-template-columns:1fr;} .season-bar-row {grid-template-columns:30px minmax(0,1fr) 90px; gap:6px; font-size:.85rem;} .season-donut {width:160px;height:160px;} }
+
+/* =========================================================
+   PANEL „MOTYW” (etap 8): kontener, wybór motywu,
+   wielkość liter i czytnik. Kolory biorą się ze zmiennych
+   :root, więc działają w motywie jasnym i ciemnym.
+   ========================================================= */
+
+/* Kontener chmurki i rozwijanego panelu */
+.theme-wrap {
+  position: relative;
+}
+
+/* Panel rozwijany pod chmurką */
+.theme-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 50;
+  width: 300px;
+  max-width: calc(100vw - 20px);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Atrybut hidden musi zawsze ukrywać panel, nawet gdy coś go ustawia inaczej */
+.theme-panel[hidden] {
+  display: none;
+}
+
+.theme-panel-title {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color: var(--primary);
+}
+
+.theme-panel-label {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Trzy opcje motywu obok siebie */
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.theme-option,
+.theme-litery-btn,
+.theme-read {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-alt);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.theme-option {
+  padding: 10px 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Zaznaczona opcja motywu (aria-pressed="true" ustawia js/theme.js) */
+.theme-option[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.theme-option:hover,
+.theme-litery-btn:hover,
+.theme-read:hover {
+  border-color: var(--accent);
+}
+
+/* Trzy przyciski wielkości liter */
+.theme-litery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.theme-litery-btn {
+  padding: 8px 6px;
+  font-weight: 700;
+}
+
+/* Najmniejsze „A−” jest mniejsze, a „A+” większe – tak wygląda sama idea */
+.theme-litery-btn:first-child { font-size: 0.85rem; }
+.theme-litery-btn:last-child  { font-size: 1.2rem; }
+
+/* Przycisk czytnika */
+.theme-read {
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.theme-read[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.theme-panel-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Na telefonie panel mieści się w szerokości ekranu */
+@media (max-width: 760px) {
+  .theme-panel {
+    width: min(300px, calc(100vw - 20px));
+  }
+}
+
+/* Logo z obrazka (img/logo.png): na telefonie mniejsze, żeby zmieścił się cały nagłówek */
+@media (max-width: 760px) {
+  .logo-img {
+    height: 44px;
+  }
+
+  .logo--footer .logo-img {
+    height: 34px;
+  }
+}

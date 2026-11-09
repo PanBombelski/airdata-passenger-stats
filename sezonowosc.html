@@ -7,6 +7,7 @@
   <meta name="description" content="Udział każdego kwartału w rocznej liczbie pasażerów wybranego lotniska.">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
   <script src="js/menu.js" defer></script>
   <script src="js/sezonowosc.js" defer></script>
 </head>
@@ -29,13 +30,37 @@
       </nav>
 
       <div class="header-actions">
-        <!-- Motyw: przycisk w kształcie chmurki, panel dojdzie w etapie 8 -->
-        <button class="theme-btn" type="button" title="Wybór motywu pojawi się w etapie 8">
-          <svg class="cloud-shape" viewBox="0 0 100 60" aria-hidden="true">
-            <path d="M22 54H80A16 16 0 0 0 80 22A24 24 0 0 0 34 20A18 18 0 0 0 22 54Z"/>
-          </svg>
-          <span class="theme-btn-label">Motyw</span>
-        </button>
+        <!-- MOTYW: chmurka otwiera panel z wyglądem (obsługuje js/theme.js) -->
+        <div class="theme-wrap">
+          <button class="theme-btn" type="button" aria-expanded="false" aria-controls="theme-panel">
+            <svg class="cloud-shape" viewBox="0 0 100 60" aria-hidden="true">
+              <path d="M22 54H80A16 16 0 0 0 80 22A24 24 0 0 0 34 20A18 18 0 0 0 22 54Z"/>
+            </svg>
+            <span class="theme-btn-label">Motyw</span>
+          </button>
+
+          <div class="theme-panel" id="theme-panel" role="group" aria-labelledby="theme-panel-title" hidden>
+            <h2 class="theme-panel-title" id="theme-panel-title">Wygląd strony</h2>
+
+            <p class="theme-panel-label">Motyw</p>
+            <div class="theme-options">
+              <button class="theme-option" type="button" data-motyw="light" aria-pressed="false">Jasny</button>
+              <button class="theme-option" type="button" data-motyw="dark" aria-pressed="false">Ciemny</button>
+              <button class="theme-option" type="button" data-motyw="system" aria-pressed="false">Jak system</button>
+            </div>
+
+            <p class="theme-panel-label">Wielkość liter</p>
+            <div class="theme-litery">
+              <button class="theme-litery-btn" type="button" id="litery-mniej" aria-label="Zmniejsz litery">A−</button>
+              <button class="theme-litery-btn" type="button" id="litery-reset" aria-label="Domyślna wielkość liter">A</button>
+              <button class="theme-litery-btn" type="button" id="litery-wiecej" aria-label="Powiększ litery">A+</button>
+            </div>
+
+            <p class="theme-panel-label">Czytnik</p>
+            <button class="theme-read" type="button" id="czytnik-btn" aria-pressed="false">Czytaj stronę na głos</button>
+            <p class="theme-panel-note" id="czytnik-status">Czyta tytuł i treść strony po polsku.</p>
+          </div>
+        </div>
 
         <!-- Konto: okrągły przycisk, logowanie dojdzie w etapie 9 -->
         <button class="account-btn" type="button" title="Logowanie pojawi się w etapie 9">
