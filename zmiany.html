@@ -9,13 +9,15 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/theme.js"></script>
   <script src="js/menu.js" defer></script>
+  <script src="js/konto.js" defer></script>
 </head>
 <body>
   <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html" aria-label="AeroStat – strona główna">
-    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+    <img src="img/logo-jasny.png" alt="Logo AeroStat" class="logo-img logo-img--jasny">
+    <img src="img/logo-ciemny.png" alt="Logo AeroStat" class="logo-img logo-img--ciemny">
 </a>
 
       <!-- Przycisk ☰ widoczny tylko na telefonie -->
@@ -61,14 +63,48 @@
           </div>
         </div>
 
-        <!-- Konto: okrągły przycisk, logowanie dojdzie w etapie 9 -->
-        <button class="account-btn" type="button" title="Logowanie pojawi się w etapie 9">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="8" r="4"/>
-            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
-          </svg>
-          <span>Konto</span>
-        </button>
+        <!-- KONTO: okrągły przycisk otwiera panel logowania (obsługuje js/konto.js) -->
+        <div class="account-wrap">
+          <button class="account-btn" type="button" aria-expanded="false" aria-controls="konto-panel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+            </svg>
+            <span>Konto</span>
+          </button>
+
+          <div class="account-panel" id="konto-panel" role="group" aria-labelledby="konto-panel-title" hidden>
+            <h2 class="account-panel-title" id="konto-panel-title">Konto</h2>
+
+            <!-- Widok dla osoby, która nie jest zalogowana -->
+            <div id="konto-logowanie">
+              <form id="login-form" class="account-form" novalidate>
+                <label for="login-nazwa">Nazwa użytkownika</label>
+                <input id="login-nazwa" name="login" type="text" autocomplete="username">
+                <label for="login-haslo">Hasło</label>
+                <input id="login-haslo" name="haslo" type="password" autocomplete="current-password">
+                <button class="btn btn-primary" type="submit">Zaloguj</button>
+                <p class="account-error" id="login-blad" role="alert"></p>
+              </form>
+              <p class="account-hint">Nie masz konta? <a href="rejestracja.html">Załóż konto</a></p>
+            </div>
+
+            <!-- Widok dla osoby zalogowanej -->
+            <div id="konto-zalogowany" hidden>
+              <p class="account-hello">Zalogowano jako <strong id="konto-nazwa"></strong></p>
+              <h3 class="account-subtitle">Ulubione lotniska</h3>
+              <form id="ulubione-form" class="account-form">
+                <label for="ulubione-wybor">Wybierz lotnisko</label>
+                <select id="ulubione-wybor"></select>
+                <button class="btn btn-secondary" type="submit">Dodaj do ulubionych</button>
+              </form>
+              <ul class="account-favs" id="ulubione-lista"></ul>
+              <button class="btn btn-secondary account-logout" id="wyloguj-btn" type="button">Wyloguj</button>
+            </div>
+
+            <p class="account-message" id="konto-komunikat" role="status"></p>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -90,7 +126,7 @@
       <h2 class="panel-title" id="wynik-tytul">Wynik</h2>
       <p class="placeholder">Tu pojawi się tabela zmian (etap 5).</p>
       <p class="note">
-        Uwaga: pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
+        <strong>Uwaga:</strong> pasażer lecący trasą krajową jest liczony dwa razy – raz na lotnisku
         odlotu i raz na lotnisku przylotu. Dlatego suma pasażerów wszystkich lotnisk
         jest większa niż liczba osób, które faktycznie poleciały.
       </p>
@@ -103,7 +139,8 @@
   <footer class="site-footer">
     <div class="footer-inner">
      <a class="logo logo--footer" href="index.html" aria-label="AeroStat – strona główna">
-    <img src="img/logo.png" alt="AeroStat" class="logo-img">
+    <img src="img/logo-jasny.png" alt="Logo AeroStat" class="logo-img logo-img--jasny">
+    <img src="img/logo-ciemny.png" alt="Logo AeroStat" class="logo-img logo-img--ciemny">
 </a>
 
       <nav class="footer-nav" aria-label="Stopka">

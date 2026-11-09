@@ -47,15 +47,67 @@ Status values: **open** (present in the code), **planned** (will be added on pur
 
 ---
 
-## Planned deliberate vulnerabilities
+## Deliberate vulnerabilities (stage 9: Konto)
+
+These gaps were added on purpose, as agreed with the project owner.
+They are not fixed in this version and are kept visible for the course.
 
 ### P1. Accounts stored in the browser with plaintext passwords
 
 - **Stage:** 9 (Konto / logowanie)
-- **Status:** planned
-- **Description:** Login and registration will work only in the browser. Accounts, including
-  passwords in plain text, will be saved in `localStorage`. "Logged-in" state will also be
-  kept in `localStorage`, so it can be faked from the browser console. Restricting CSV export
-  to logged-in users will therefore only be a client-side check.
-- **Possible fix:** A real backend with hashed passwords (e.g. bcrypt/argon2), server-side
-  sessions and server-side permission checks.
+- **Status:** open (deliberate)
+- **Where:** `js/konto.js`, `localStorage` keys `airdata-konta`, `airdata-sesja`, `airdata-ulubione`
+- **Description:** Registration saves every account as `{ login, haslo }` in plain text inside
+  the browser's `localStorage`. There is no server and no hashing. Anyone who can open the browser
+  developer tools on the same computer can read all passwords.
+- **Possible fix:** A real backend with hashed passwords (e.g. bcrypt or argon2), server-side sessions
+  and server-side permission checks.
+
+### P2. Login state can be forged in the browser
+
+- **Stage:** 9
+- **Status:** open (deliberate)
+- **Where:** `js/konto.js`, key `airdata-sesja`
+- **Description:** The "logged in" state is only a plain login name stored in `localStorage`.
+  A person can type any existing login into the console (`localStorage.setItem(...)`) and appear
+  logged in without knowing the password. The check is done only in the page's JavaScript.
+- **Possible fix:** Server-side sessions with secure, HTTP-only cookies, checked on every request.
+
+### P3. CSV download restriction is client-side only
+
+- **Stage:** 9 (CSV export from stage 7)
+- **Status:** open (deliberate)
+- **Where:** `js/konto.js`, the capture-phase click listener for "Pobierz CSV" buttons
+- **Description:** Downloads are blocked for people who are not logged in only by JavaScript
+  in the same page. Turning off JavaScript, or running the code again in the console, removes
+  the restriction. The data itself (`data/LOTY.csv`) is public anyway.
+- **Possible fix:** Serve restricted files only from a backend that checks the session first.
+
+### P4. No limits on login attempts and no password rules
+
+- **Stage:** 9
+- **Status:** open (deliberate)
+- **Where:** `js/konto.js`, functions `zaloguj()` and `zarejestruj()`
+- **Description:** There is no limit on wrong password attempts, no delay and no minimum password length.
+  Passwords like `a` are accepted. A script can try thousands of passwords per second.
+- **Possible fix:** Rate limiting on the server, password length and strength rules,
+  and a short lock after several failed attempts.
+
+### P5. Account data readable by any script on the same site
+
+- **Stage:** 9
+- **Status:** open (deliberate)
+- **Where:** all pages (`localStorage` is shared by the whole site)
+- **Description:** Any script running on this site, including a future injected script, can read
+  `airdata-konta` and change the stored data. The site has no Content-Security-Policy (see L3).
+- **Possible fix:** Store nothing secret in the browser, and add a CSP header.
+
+### P6. Form input is not sanitized
+
+- **Stage:** 9
+- **Status:** open (deliberate)
+- **Where:** `js/konto.js`, login and registration forms
+- **Description:** Login and registration only check that the fields are not empty. Names are saved
+  exactly as typed, with no length limit. Values are shown with `textContent`, so they are not run as
+  HTML here, but nothing stops very long or odd values from being stored.
+- **Possible fix:** Length and character rules on the server, and a server-side check of every value.

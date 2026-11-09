@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rejestracja – airdata</title>
+  <meta name="description" content="Załóż konto w serwisie airdata.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+  <script src="js/menu.js" defer></script>
+  <script src="js/konto.js" defer></script>
+</head>
+<body>
+  <!-- NAGŁÓWEK: logo, menu, przyciski Motyw i Konto (taki sam na każdej stronie) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="airdata - strona główna">
+    <img src="img/logo-jasny.png" alt="Logo AeroStat" class="logo-img logo-img--jasny">
+    <img src="img/logo-ciemny.png" alt="Logo AeroStat" class="logo-img logo-img--ciemny">
+    
+</a>
+
+      <!-- Przycisk ☰ widoczny tylko na telefonie -->
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Menu główne">
+        <a class="nav-link" href="index.html">Start</a>
+        <a class="nav-link" href="ranking.html">Ranking</a>
+        <a class="nav-link" href="porownywarka.html">Porównywarka</a>
+        <a class="nav-link" href="kontakt.html">Kontakt</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- MOTYW: chmurka otwiera panel z wyglądem (obsługuje js/theme.js) -->
+        <div class="theme-wrap">
+          <button class="theme-btn" type="button" aria-expanded="false" aria-controls="theme-panel">
+            <svg class="cloud-shape" viewBox="0 0 100 60" aria-hidden="true">
+              <path d="M22 54H80A16 16 0 0 0 80 22A24 24 0 0 0 34 20A18 18 0 0 0 22 54Z"/>
+            </svg>
+            <span class="theme-btn-label">Motyw</span>
+          </button>
+
+          <div class="theme-panel" id="theme-panel" role="group" aria-labelledby="theme-panel-title" hidden>
+            <h2 class="theme-panel-title" id="theme-panel-title">Wygląd strony</h2>
+
+            <p class="theme-panel-label">Motyw</p>
+            <div class="theme-options">
+              <button class="theme-option" type="button" data-motyw="light" aria-pressed="false">Jasny</button>
+              <button class="theme-option" type="button" data-motyw="dark" aria-pressed="false">Ciemny</button>
+              <button class="theme-option" type="button" data-motyw="system" aria-pressed="false">Jak system</button>
+            </div>
+
+            <p class="theme-panel-label">Wielkość liter</p>
+            <div class="theme-litery">
+              <button class="theme-litery-btn" type="button" id="litery-mniej" aria-label="Zmniejsz litery">A−</button>
+              <button class="theme-litery-btn" type="button" id="litery-reset" aria-label="Domyślna wielkość liter">A</button>
+              <button class="theme-litery-btn" type="button" id="litery-wiecej" aria-label="Powiększ litery">A+</button>
+            </div>
+
+            <p class="theme-panel-label">Czytnik</p>
+            <button class="theme-read" type="button" id="czytnik-btn" aria-pressed="false">Czytaj stronę na głos</button>
+            <p class="theme-panel-note" id="czytnik-status">Czyta tytuł i treść strony po polsku.</p>
+          </div>
+        </div>
+
+        <!-- KONTO: okrągły przycisk otwiera panel logowania (obsługuje js/konto.js) -->
+        <div class="account-wrap">
+          <button class="account-btn" type="button" aria-expanded="false" aria-controls="konto-panel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+            </svg>
+            <span>Konto</span>
+          </button>
+
+          <div class="account-panel" id="konto-panel" role="group" aria-labelledby="konto-panel-title" hidden>
+            <h2 class="account-panel-title" id="konto-panel-title">Konto</h2>
+
+            <!-- Widok dla osoby, która nie jest zalogowana -->
+            <div id="konto-logowanie">
+              <form id="login-form" class="account-form" novalidate>
+                <label for="login-nazwa">Nazwa użytkownika</label>
+                <input id="login-nazwa" name="login" type="text" autocomplete="username">
+                <label for="login-haslo">Hasło</label>
+                <input id="login-haslo" name="haslo" type="password" autocomplete="current-password">
+                <button class="btn btn-primary" type="submit">Zaloguj</button>
+                <p class="account-error" id="login-blad" role="alert"></p>
+              </form>
+              <p class="account-hint">Nie masz konta? <a href="rejestracja.html">Załóż konto</a></p>
+            </div>
+
+            <!-- Widok dla osoby zalogowanej -->
+            <div id="konto-zalogowany" hidden>
+              <p class="account-hello">Zalogowano jako <strong id="konto-nazwa"></strong></p>
+              <h3 class="account-subtitle">Ulubione lotniska</h3>
+              <form id="ulubione-form" class="account-form">
+                <label for="ulubione-wybor">Wybierz lotnisko</label>
+                <select id="ulubione-wybor"></select>
+                <button class="btn btn-secondary" type="submit">Dodaj do ulubionych</button>
+              </form>
+              <ul class="account-favs" id="ulubione-lista"></ul>
+              <button class="btn btn-secondary account-logout" id="wyloguj-btn" type="button">Wyloguj</button>
+            </div>
+
+            <p class="account-message" id="konto-komunikat" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main page">
+    <div class="page-head">
+      <h1>Załóż konto</h1>
+      <p class="lead">Konto pozwala zapisać ulubione lotniska i pobierać pliki CSV.</p>
+    </div>
+
+    <section class="panel" aria-labelledby="rej-tytul">
+      <h2 class="panel-title" id="rej-tytul">Nowe konto</h2>
+      <form id="rejestracja-form" class="account-form account-form--page" novalidate>
+        <label for="rej-login">Nazwa użytkownika</label>
+        <input id="rej-login" name="login" type="text" autocomplete="username">
+        <label for="rej-haslo">Hasło</label>
+        <input id="rej-haslo" name="haslo" type="password" autocomplete="new-password">
+        <label for="rej-haslo2">Powtórz hasło</label>
+        <input id="rej-haslo2" name="haslo2" type="password" autocomplete="new-password">
+        <button class="btn btn-primary" type="submit">Utwórz konto</button>
+        <p class="account-error" id="rejestracja-komunikat" role="alert"></p>
+      </form>
+
+      <div id="rejestracja-sukces" class="account-success" hidden>
+        <h2 class="panel-title">Konto utworzone</h2>
+        <p>Jesteś zalogowany jako <strong id="rejestracja-login-info"></strong>.</p>
+        <p><a class="btn btn-primary" href="index.html">Przejdź na Start</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- STOPKA: logo, O projekcie, Kontakt, Media (taka sama na każdej stronie) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+     <a class="logo logo--footer" href="index.html" aria-label="AeroStat – strona główna">
+    <img src="img/logo-jasny.png" alt="Logo AeroStat" class="logo-img logo-img--jasny">
+    <img src="img/logo-ciemny.png" alt="Logo AeroStat" class="logo-img logo-img--ciemny">
+</a>
+
+      <nav class="footer-nav" aria-label="Stopka">
+        <a class="footer-link" href="index.html#o-projekcie">O projekcie</a>
+        <a class="footer-link" href="kontakt.html">Kontakt</a>
+        <a class="footer-link footer-link--round" href="kontakt.html#media">Media</a>
+      </nav>
+    </div>
+    <p class="footer-note">Projekt zaliczeniowy · Politechnika Rzeszowska · dane: dane.gov.pl</p>
+  </footer>
+</body>
+</html>

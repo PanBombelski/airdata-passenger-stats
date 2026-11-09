@@ -24,6 +24,7 @@
   --cloud-text: #0d3b6e;
   --note-bg: #fff6e0;         /* tło uwag (jak światła pasa startowego) */
   --note-border: #f2a33a;
+  --danger: #b3261e;          /* komunikaty o błędzie */
   --focus: #f2a33a;           /* obwódka elementu wybranego klawiszem Tab */
   --shadow: 0 8px 24px rgba(13, 59, 110, 0.12);
   --radius: 14px;             /* zaokrąglenie rogów */
@@ -52,6 +53,7 @@
   --cloud-text: #e6edf5;
   --note-bg: #2c2618;
   --note-border: #c98a2e;
+  --danger: #ff8a80;
   --focus: #f2a33a;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
@@ -239,12 +241,30 @@ button:focus-visible {
 }
 
 .theme-btn-label {
-  position: relative; /* napis nad chmurką */
-  display: block;
-  padding-top: 14px;
+  position: absolute; /* napis leży na środku chmurki */
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 14px; /* przesuwa środek napisu w dół, do środka „ciała” chmurki */
   color: var(--cloud-text);
   font-weight: 700;
   font-size: 0.95rem;
+  line-height: 1;
+  pointer-events: none; /* kliknięcie przechodzi do całego przycisku */
+}
+
+/* Logo w dwóch wersjach kolorystycznych */
+.logo-img--ciemny {
+  display: none;
+}
+
+:root[data-theme="dark"] .logo-img--jasny {
+  display: none;
+}
+
+:root[data-theme="dark"] .logo-img--ciemny {
+  display: block;
 }
 
 /* Konto – okrągły przycisk */
@@ -471,12 +491,38 @@ button:focus-visible {
 
 /* Uwaga o podwójnym liczeniu pasażerów */
 .note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   margin: 0 0 16px;
-  padding: 12px 16px;
-  font-size: 0.9rem;
-  background: var(--note-bg);
-  border-left: 4px solid var(--note-border);
-  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Okrągła ikona „i” przed treścią uwagi */
+.note::before {
+  content: "i";
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.note strong {
+  color: var(--primary);
 }
 
 /* Sekcja „O projekcie” na stronie Start */
@@ -726,9 +772,18 @@ button:focus-visible {
     border: 1px solid var(--border);
   }
 
-  .hero-desc {
+  /* Biały prostokąt obejmuje opis i przycisk „→ Ranking” */
+  .hero-text {
+    padding: 16px 16px 18px;
     background: var(--surface);
     border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .hero-desc {
+    padding: 0;
+    background: none;
   }
 
   .hero-desc h1 {
@@ -737,6 +792,7 @@ button:focus-visible {
 
   .hero-link {
     align-self: center;
+    margin-top: 4px;
   }
 
   /* Kafelki jeden pod drugim, jako wąskie przyciski */
@@ -1009,5 +1065,177 @@ button:focus-visible {
 
   .logo--footer .logo-img {
     height: 34px;
+  }
+}
+
+/* =========================================================
+   PANEL KONTO (logowanie, ulubione) i strona rejestracji
+   ========================================================= */
+
+.account-wrap {
+  position: relative; /* panel ustawiamy względem przycisku Konto */
+}
+
+.account-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 50;
+  width: 320px;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto; /* na niskim ekranie panel się przewija */
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.account-panel[hidden],
+#konto-zalogowany[hidden],
+#konto-logowanie[hidden],
+#rejestracja-sukces[hidden],
+#rejestracja-form[hidden] {
+  display: none;
+}
+
+.account-panel-title {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--primary);
+}
+
+.account-subtitle {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+.account-hello {
+  margin: 0;
+}
+
+.account-hint {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.account-form input,
+.account-form select {
+  font: inherit;
+  padding: 10px 12px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.account-form input:focus,
+.account-form select:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.account-form .btn {
+  margin-top: 6px;
+}
+
+.account-error {
+  min-height: 1.3em;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--danger);
+}
+
+.account-message {
+  min-height: 1.3em;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Lista ulubionych lotnisk */
+.account-favs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.account-favs li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.92rem;
+  background: var(--surface-alt);
+  border-radius: 10px;
+}
+
+.account-favs .konto-pusta {
+  background: none;
+  color: var(--text-muted);
+  padding-left: 0;
+}
+
+.konto-usun {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.account-logout {
+  width: 100%;
+}
+
+/* Strona rejestracji: formularz w środkowym panelu */
+.account-form--page {
+  max-width: 420px;
+  margin: 0 auto;
+  gap: 8px;
+}
+
+.account-form--page .btn {
+  align-self: flex-start;
+}
+
+.account-success {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Telefon: panel Konto mieści się na ekranie */
+@media (max-width: 760px) {
+  .account-panel {
+    width: calc(100vw - 20px);
+    right: -6px;
   }
 }
